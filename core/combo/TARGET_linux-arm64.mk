@@ -29,6 +29,10 @@
 # include defines, and compiler settings for the given architecture
 # version.
 #
+
+# ArchiDroid
+include $(BUILD_SYSTEM)/leeopts.mk
+
 ifeq ($(strip $(TARGET_ARCH_VARIANT)),)
 TARGET_ARCH_VARIANT := armv8
 endif
@@ -73,6 +77,10 @@ TARGET_NO_UNDEFINED_LDFLAGS := -Wl,--no-undefined
 
 TARGET_GLOBAL_CFLAGS += \
     -fno-strict-aliasing \
+
+$(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += $(LEE_GCC_CFLAGS)
+$(combo_2nd_arch_prefix)TARGET_GLOBAL_CPPFLAGS += $(LEE_GCC_CPPFLAGS)
+$(combo_2nd_arch_prefix)TARGET_GLOBAL_LDFLAGS += $(LEE_GCC_LDFLAGS)
 
 TARGET_GLOBAL_CFLAGS += \
 			-fstack-protector-strong \
@@ -128,11 +136,16 @@ TARGET_GLOBAL_CPPFLAGS += -fvisibility-inlines-hidden
 # More flags/options can be added here
 TARGET_RELEASE_CFLAGS := \
 			-DNDEBUG \
-			-O2 -g \
+			$(LEE_GCC_CFLAGS_OPTI) \
 			-Wstrict-aliasing=2 \
 			-fgcse-after-reload \
 			-frerun-cse-after-loop \
 			-frename-registers
+
+TARGET_GLOBAL_CFLAGS += $(LEE_GCC_CFLAGS)
+TARGET_GLOBAL_CFLAGS += $(LEE_GCC_CFLAGS_64)
+TARGET_GLOBAL_CPPFLAGS += $(LEE_GCC_CPPFLAGS)
+TARGET_GLOBAL_LDFLAGS += $(LEE_GCC_LDFLAGS)
 
 libc_root := bionic/libc
 libm_root := bionic/libm

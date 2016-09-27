@@ -1,5 +1,8 @@
 ## Clang configurations.
 
+# ArchiDroid
+include $(BUILD_SYSTEM)/leeopts.mk
+
 LLVM_PREBUILTS_PATH := $(LLVM_PREBUILTS_BASE)/$(BUILD_OS)-x86/$(LLVM_PREBUILTS_VERSION)/bin
 LLVM_RTLIB_PATH := $(LLVM_PREBUILTS_PATH)/../lib64/clang/$(LLVM_RELEASE_VERSION)/lib/linux/
 
@@ -10,6 +13,10 @@ LLVM_LINK := $(LLVM_PREBUILTS_PATH)/llvm-link$(BUILD_EXECUTABLE_SUFFIX)
 
 CLANG_TBLGEN := $(BUILD_OUT_EXECUTABLES)/clang-tblgen$(BUILD_EXECUTABLE_SUFFIX)
 LLVM_TBLGEN := $(BUILD_OUT_EXECUTABLES)/llvm-tblgen$(BUILD_EXECUTABLE_SUFFIX)
+
+CLANG_CONFIG_EXTRA_CFLAGS += $(LEE_CLANG_CFLAGS)
+CLANG_CONFIG_EXTRA_CPPFLAGS += $(LEE_CLANG_CPPFLAGS)
+CLANG_CONFIG_EXTRA_LDFLAGS += $(LEE_CLANG_LDFLAGS)
 
 # RenderScript-specific tools
 # These are tied to the version of LLVM directly in external/, so they might
@@ -90,7 +97,8 @@ CLANG_CONFIG_UNKNOWN_CFLAGS := \
   -Wunused-but-set-parameter \
   -Wunused-but-set-variable \
   -fdiagnostics-color \
-  -fdebug-prefix-map=/proc/self/cwd=
+  -fdebug-prefix-map=/proc/self/cwd= \
+  $(LEE_CLANG_UNKNOWN_FLAGS)
 
 # Clang flags for all host rules
 CLANG_CONFIG_HOST_EXTRA_ASFLAGS :=

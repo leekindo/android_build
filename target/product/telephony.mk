@@ -25,4 +25,3 @@ PRODUCT_PACKAGES := \
     EmergencyInfo \
     rild
 
-PRODUCT_COPY_FILES := \
