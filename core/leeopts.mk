@@ -18,7 +18,7 @@ LEE_GCC_CFLAGS_ARM := $(LEE_GCC_CFLAGS_OPTI)
 LEE_GCC_CFLAGS_THUMB := $(LEE_GCC_CFLAGS_OPTI)
 
 # Additional flags passed to all C targets compiled with GCC
-LEE_GCC_CFLAGS := $(LEE_GCC_CFLAGS_OPTI) -pipe -fgcse-las -fgcse-sm -fipa-pta -fivopts -fomit-frame-pointer -frename-registers -fsection-anchors -ftree-loop-im -ftree-loop-ivcanon -ftree-vectorize -funsafe-loop-optimizations -funswitch-loops -fweb
+LEE_GCC_CFLAGS := $(LEE_GCC_CFLAGS_OPTI) -pipe -fgcse-las -fgcse-sm -fipa-pta -fivopts -fomit-frame-pointer -frename-registers -fsection-anchors -ftree-loop-im -ftree-loop-ivcanon -ftree-vectorize -funsafe-loop-optimizations -funswitch-loops -fweb -DNO_SECURE_DISCARD
 
 # Flags passed to all C targets compiled with GCC
 LEE_GCC_CPPFLAGS := $(LEE_GCC_CFLAGS_OPTI)
