@@ -38,10 +38,10 @@ TARGET_$(combo_2nd_arch_prefix)ARCH_VARIANT := armv5te
 endif
 
 # Decouple NDK library selection with platform compiler version
-$(combo_2nd_arch_prefix)TARGET_NDK_GCC_VERSION := 4.9
+$(combo_2nd_arch_prefix)TARGET_NDK_GCC_VERSION := 6.x
 
 ifeq ($(strip $(TARGET_GCC_VERSION_EXP)),)
-$(combo_2nd_arch_prefix)TARGET_GCC_VERSION := 4.9
+$(combo_2nd_arch_prefix)TARGET_GCC_VERSION := 6.x
 else
 $(combo_2nd_arch_prefix)TARGET_GCC_VERSION := $(TARGET_GCC_VERSION_EXP)
 endif
@@ -126,7 +126,7 @@ $(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += \
 
 # Currently building with GCC 5.x yields to false positives errors
 # This ensures the build is not hatled on the following errors
-ifneq ($(filter $($(combo_2nd_arch_prefix)TARGET_GCC_VERSION), 5.1 5.1.% 5.2 5.2.% 5.3),)
+ifneq ($(filter $($(combo_2nd_arch_prefix)TARGET_GCC_VERSION), 5.1 5.1.% 5.2 5.2.% 5.3 6.% 7.%),)
     TARGET_GLOBAL_CFLAGS += -Wno-array-bounds -Wno-strict-overflow
 endif
 
