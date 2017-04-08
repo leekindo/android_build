@@ -262,6 +262,10 @@ endif
 my_cppflags := $(my_cpp_std_version) $(my_cppflags)
 
 
+
+# ArchiDroid
+include $(BUILD_SYSTEM)/leeopts.mk
+
 ifeq ($(SDCLANG),true)
     ifeq ($(my_sdclang),)
         ifeq ($(TARGET_USE_SDCLANG),true)

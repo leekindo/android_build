@@ -1,8 +1,5 @@
 # Put some miscellaneous rules here
 
-# Optimizaciones Lee
-include $(BUILD_SYSTEM)/leeopts.mk
-
 # HACK: clear LOCAL_PATH from including last build target before calling
 # intermedites-dir-for
 LOCAL_PATH := $(BUILD_SYSTEM)

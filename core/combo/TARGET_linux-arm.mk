@@ -30,9 +30,6 @@
 # version.
 #
 
-# ArchiDroid
-include $(BUILD_SYSTEM)/leeopts.mk
-
 ifeq ($(strip $(TARGET_$(combo_2nd_arch_prefix)ARCH_VARIANT)),)
 TARGET_$(combo_2nd_arch_prefix)ARCH_VARIANT := armv5te
 endif
@@ -75,23 +72,14 @@ endef
 
 $(combo_2nd_arch_prefix)TARGET_NO_UNDEFINED_LDFLAGS := -Wl,--no-undefined
 
-# Compiler linkers
-$(combo_2nd_arch_prefix)TARGET_LD := $($(combo_2nd_arch_prefix)TARGET_TOOLS_PREFIX)ld$(HOST_EXECUTABLE_SUFFIX)
-ifeq ($(ENABLE_GOLD_LINKER),true)
-$(combo_2nd_arch_prefix)TARGET_LD := $($(combo_2nd_arch_prefix)TARGET_TOOLS_PREFIX)ld.gold$(HOST_EXECUTABLE_SUFFIX)
-endif
-ifeq ($(ENABLE_BFD_LINKER),true)
-$(combo_2nd_arch_prefix)TARGET_LD := $($(combo_2nd_arch_prefix)TARGET_TOOLS_PREFIX)ld.bfd$(HOST_EXECUTABLE_SUFFIX)
-endif
-
-$(combo_2nd_arch_prefix)TARGET_arm_CFLAGS :=    $(LEE_GCC_CFLAGS_ARM) \
+$(combo_2nd_arch_prefix)TARGET_arm_CFLAGS :=    -O2 \
                         -fomit-frame-pointer \
                         -fstrict-aliasing    \
                         -funswitch-loops
 
 # Modules can choose to compile some source as thumb.
 $(combo_2nd_arch_prefix)TARGET_thumb_CFLAGS :=  -mthumb \
-                        $(LEE_GCC_CFLAGS_THUMB) \
+                        -Os \
                         -fomit-frame-pointer \
                         -fno-strict-aliasing
 
@@ -125,8 +113,9 @@ $(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += \
 
 # Currently building with GCC 5.x yields to false positives errors
 # This ensures the build is not hatled on the following errors
-ifneq ($(filter $($(combo_2nd_arch_prefix)TARGET_GCC_VERSION), 5.1 5.1.% 5.2 5.2.% 5.3 6.% 7.%),)
-    TARGET_GLOBAL_CFLAGS += -Wno-array-bounds -Wno-strict-overflow
+ifneq ($(filter 4.6 4.6.% 4.7 4.7.% 4.8 4.9 6.% 7.%, $($(combo_2nd_arch_prefix)TARGET_GCC_VERSION)),)
+  $(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += -fno-builtin-sin \
+  			-fno-strict-volatile-bitfields
 endif
 
 # This is to avoid the dreaded warning compiler message:
@@ -151,9 +140,7 @@ $(combo_2nd_arch_prefix)TARGET_GLOBAL_LDFLAGS += \
 			-Wl,--no-undefined-version \
 			$(arch_variant_ldflags)
 
-ifneq ($(strip $(ENABLE_ARM_MODE)),true)
- $(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += -mthumb-interwork
-endif
+$(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += -mthumb-interwork
 
 $(combo_2nd_arch_prefix)TARGET_GLOBAL_CPPFLAGS += -fvisibility-inlines-hidden
 
@@ -164,11 +151,6 @@ $(combo_2nd_arch_prefix)TARGET_RELEASE_CFLAGS := \
 			-fgcse-after-reload \
 			-frerun-cse-after-loop \
 			-frename-registers
-
-$(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += $(LEE_GCC_CFLAGS)
-$(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += $(LEE_GCC_CFLAGS_32)
-$(combo_2nd_arch_prefix)TARGET_GLOBAL_CPPFLAGS += $(LEE_GCC_CPPFLAGS)
-$(combo_2nd_arch_prefix)TARGET_GLOBAL_LDFLAGS += $(LEE_GCC_LDFLAGS)
 
 libc_root := bionic/libc
 libm_root := bionic/libm
