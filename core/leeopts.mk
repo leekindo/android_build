@@ -74,9 +74,9 @@ my_conlyflags := $(filter-out -Wall -Werror -g -Wextra -Weverything,$(my_conlyfl
 
 ifneq (1,$(words $(filter $(DISABLE_O3),$(LOCAL_MODULE))))
   # Remove previous Optimization flags, we'll set O3 there
-  my_cflags := $(filter-out -O3 -O2 -Os -O1 -O0 -Og -Oz,$(my_cflags)) -O3 -g0 -DNDEBUG -fno-protect-parens -fstack-arrays
-  my_conlyflags := $(filter-out -O3 -O2 -Os -O1 -O0 -Og -Oz,$(my_conlyflags)) -O3 -g0 -DNDEBUG -fno-protect-parens -fstack-arrays
-  my_cppflags := $(filter-out -O3 -O2 -Os -O1 -O0 -Og -Oz,$(my_cppflags)) -O3 -g0 -DNDEBUG -fno-protect-parens -fstack-arrays
+  my_cflags := $(filter-out -O3 -O2 -Os -O1 -O0 -Og -Oz,$(my_cflags)) -O3 -g0 -DNDEBUG
+  my_conlyflags := $(filter-out -O3 -O2 -Os -O1 -O0 -Og -Oz,$(my_conlyflags)) -O3 -g0 -DNDEBUG
+  my_cppflags := $(filter-out -O3 -O2 -Os -O1 -O0 -Og -Oz,$(my_cppflags)) -O3 -g0 -DNDEBUG
 endif
 
 ifeq ($(STRICT_ALIASING),true)
