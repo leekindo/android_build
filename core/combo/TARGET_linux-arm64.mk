@@ -35,10 +35,10 @@ TARGET_ARCH_VARIANT := armv8
 endif
 
 # Decouple NDK library selection with platform compiler version
-TARGET_NDK_GCC_VERSION := 6.x
+TARGET_NDK_GCC_VERSION := 8.x
 
 ifeq ($(strip $(TARGET_GCC_VERSION_EXP)),)
-TARGET_GCC_VERSION := 6.x
+TARGET_GCC_VERSION := 8.x
 else
 TARGET_GCC_VERSION := $(TARGET_GCC_VERSION_EXP)
 endif
